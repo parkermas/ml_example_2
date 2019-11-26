@@ -128,3 +128,15 @@ metrics(x_2, truth = dvote, estimate = pred_dvote) %>%
 
 ```
 
+```{r}
+
+logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(formula = dvote ~ gender + party + state + office, data = clean) %>%
+  predict(new_data = clean) %>%
+  bind_cols(clean) %>%
+  metrics(truth = dvote, estimate = .pred_class)
+  
+
+```
+
