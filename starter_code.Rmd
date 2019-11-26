@@ -137,6 +137,20 @@ logistic_reg() %>%
   bind_cols(clean) %>%
   metrics(truth = dvote, estimate = .pred_class)
   
+```
+
+```{r}
+
+clean_split <- initial_split(clean, prop = 1/100)
+train_data <- training(clean_split)
+test_data <- testing(clean_split)
+
+logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(formula = dvote ~ gender + party + state + office, data = train_data) %>%
+  predict(new_data = train_data) %>%
+  bind_cols(train_data) %>%
+  metrics(truth = dvote, estimate = .pred_class)
 
 ```
 
